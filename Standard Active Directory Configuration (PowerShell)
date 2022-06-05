@@ -18,19 +18,19 @@ New-ADOrganizationalUnit -Name "Access" -Path $domainpath
     New-ADOrganizationalUnit -Name "AdminAccounts" -Path "ou=Access,DC=basicvlab,DC=local"
     New-ADOrganizationalUnit -Name "ServiceAccounts" -Path "ou=Access,DC=basicvlab,DC=local"
     New-ADOrganizationalUnit -Name "UserAccess" -Path "ou=Access,DC=basicvlab,DC=local"
-        New-ADOrganizationalUnit -Name "BusinessUsers" -Path "ou=UserAccess,ou=Access,$domainpath"
-        New-ADOrganizationalUnit -Name "Finance" -Path "ou=UserAccess,ou=Access,$domainpath"
-        New-ADOrganizationalUnit -Name "Legal" -Path "ou=UserAccess,ou=Access,$domainpath"
-        New-ADOrganizationalUnit -Name "Marketing" -Path "ou=UserAccess,ou=Access,$domainpath"
-        New-ADOrganizationalUnit -Name "HumanResources" -Path "ou=UserAccess,ou=Access,$domainpath"
-        New-ADOrganizationalUnit -Name "Mortgages" -Path "ou=UserAccess,ou=Access,$domainpath"
-        New-ADOrganizationalUnit -Name "Operations" -Path "ou=UserAccess,ou=Access,$domainpath"
-        New-ADOrganizationalUnit -Name "Procurement" -Path "ou=UserAccess,ou=Access,$domainpath"
-        New-ADOrganizationalUnit -Name "ProjectManagement" -Path "ou=UserAccess,ou=Access,$domainpath"       
-        New-ADOrganizationalUnit -Name "RiskManagement" -Path "ou=UserAccess,ou=Access,$domainpath"
-        New-ADOrganizationalUnit -Name "Sales" -Path "ou=UserAccess,ou=Access,$domainpath"
-        New-ADOrganizationalUnit -Name "TechnicalProjectManagement" -Path "ou=UserAccess,ou=Access,$domainpath" 
-        New-ADOrganizationalUnit -Name "QualityAssurance" -Path "ou=UserAccess,ou=Access,$domainpath"
+        New-ADOrganizationalUnit -Name "BusinessUsers" -Path $useraccesspath
+        New-ADOrganizationalUnit -Name "Finance" -Path $useraccesspath
+        New-ADOrganizationalUnit -Name "Legal" -Path $useraccesspath
+        New-ADOrganizationalUnit -Name "Marketing" -Path $useraccesspath
+        New-ADOrganizationalUnit -Name "HumanResources" -Path $useraccesspath
+        New-ADOrganizationalUnit -Name "Mortgages" -Path $useraccesspath
+        New-ADOrganizationalUnit -Name "Operations" -Path $useraccesspath
+        New-ADOrganizationalUnit -Name "Procurement" -Path $useraccesspath
+        New-ADOrganizationalUnit -Name "ProjectManagement" -Path $useraccesspath       
+        New-ADOrganizationalUnit -Name "RiskManagement" -Path $useraccesspath
+        New-ADOrganizationalUnit -Name "Sales" -Path $useraccesspath
+        New-ADOrganizationalUnit -Name "TechnicalProjectManagement" -Path $useraccesspath 
+        New-ADOrganizationalUnit -Name "QualityAssurance" -Path $useraccesspath
     New-ADOrganizationalUnit -Name "AdminAccess" -Path "ou=UserAccess,ou=Access,DC=basicvlab,DC=local"
     
     #User Access Nested OU's
