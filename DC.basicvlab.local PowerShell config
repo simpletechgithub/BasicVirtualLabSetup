@@ -1,6 +1,24 @@
 #Create 'basicvlab' with powershell
 #Run on your new Domain Controller. This script has been tested successfully in the author's lab environment.
 
+#working  05/06/2022 
+#VARS
+$folder = "Directory"
+
+Rename-NetAdapter -Name “Ethernet0" -NewName “basicvlab"
+New-NetIPAddress 10.0.0.1 -InterfaceAlias "basicvlab" -PrefixLength 24
+Set-DnsClientServerAddress -InterfaceAlias "basicvlab" -ServerAddresses 127.0.0.1
+Disable-NetAdapterBinding -Name "*" -ComponentID ms_tcpip6
+ipconfig
+Set-NetFirewallProfile -Enabled False
+
+
+Rename-Computer dc
+Restart-Computer  -Force
+#
+#REBOOT THEN RUN THE REST____________________________
+
+Install-WindowsFeature -Name Telnet-Client
  
 #Install DNS
 Install-WindowsFeature -Name DNS -IncludeManagementTools
