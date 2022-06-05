@@ -13,6 +13,15 @@ New-ADOrganizationalUnit -Name "Access" -Path $domainpath
     New-ADOrganizationalUnit -Name "ServiceAccounts" -Path "ou=Access,DC=basicvlab,DC=local"
     New-ADOrganizationalUnit -Name "UserAccess" -Path "ou=Access,DC=basicvlab,DC=local"
         New-ADOrganizationalUnit -Name "BusinessUsers" -Path "ou=UserAccess,DC=basicvlab,DC=local"
+        New-ADOrganizationalUnit -Name "Finance" -Path "ou=UserAccess,DC=basicvlab,DC=local"
+        New-ADOrganizationalUnit -Name "Legal" -Path "ou=UserAccess,DC=basicvlab,DC=local"
+        New-ADOrganizationalUnit -Name "Marketing" -Path "ou=UserAccess,DC=basicvlab,DC=local"
+        New-ADOrganizationalUnit -Name "HumanResources" -Path "ou=UserAccess,DC=basicvlab,DC=local"
+        New-ADOrganizationalUnit -Name "Operations" -Path "ou=UserAccess,DC=basicvlab,DC=local"
+        New-ADOrganizationalUnit -Name "Procurement" -Path "ou=UserAccess,DC=basicvlab,DC=local"
+        New-ADOrganizationalUnit -Name "ProjectManagement" -Path "ou=UserAccess,DC=basicvlab,DC=local"
+        New-ADOrganizationalUnit -Name "Sales" -Path "ou=UserAccess,DC=basicvlab,DC=local"
+        New-ADOrganizationalUnit -Name "QualityAssurance" -Path "ou=UserAccess,DC=basicvlab,DC=local"
     New-ADOrganizationalUnit -Name "AdminAccess" -Path "ou=Access,DC=basicvlab,DC=local"
     
     #User Access Nested OU's
