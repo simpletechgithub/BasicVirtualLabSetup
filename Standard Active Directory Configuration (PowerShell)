@@ -38,6 +38,7 @@ New-ADOrganizationalUnit -Name "Resources" -Path $domainpath
     New-ADOrganizationalUnit -Name "Servers" -Path $resourcespath
        New-ADOrganizationalUnit -Name "DomainInfrastructure" -Path $serverspath
        New-ADOrganizationalUnit -Name "ApplicationInfrastructure" -Path $serverspath
+       New-ADOrganizationalUnit -Name "RDSInfrastructure" -Path $serverspath
 
 
 #Add New Groups and Members
