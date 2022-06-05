@@ -1,13 +1,19 @@
+#PLEASE NOTE - I always create atleast two users on a new domain, as enterprise and domain admins
+#Some of the steps below do involve these users so you will see failures if you don't have these two user accounts.
+#'enterprise0'
+#'<nameofdomain>' e.g. basicvlab
+
 #VARS
     $domainpath = "DC=basicvlab,DC=local"
     $domaininfrastructurepath = "ou=DomainInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
+    $serviceaccountspath = "ou=ServiceAccounts,ou=Access,DC=basicvlab,DC=local"
     $resourcespath = "ou=Resources,DC=basicvlab,DC=local"
     $serverspath = "ou=Servers,ou=Resources,DC=basicvlab,DC=local"
     $useraccesspath = "ou=UserAccess,ou=Access,DC=basicvlab,DC=local"
     $adminaccesspath = "ou=AdminAccess,ou=Access,DC=basicvlab,DC=local"
     
 
-#Add new OU's
+#Add generic user OU's
 New-ADOrganizationalUnit -Name "Access" -Path $domainpath
     New-ADOrganizationalUnit -Name "AdminAccounts" -Path "ou=Access,DC=basicvlab,DC=local"
     New-ADOrganizationalUnit -Name "ServiceAccounts" -Path "ou=Access,DC=basicvlab,DC=local"
@@ -27,10 +33,34 @@ New-ADOrganizationalUnit -Name "Access" -Path $domainpath
     #User Access Nested OU's
         New-ADOrganizationalUnit -Name "CitrixGroups" -Path "ou=UserAccess,ou=Access,DC=basicvlab,DC=local"
 
+#Add common Infrastructure OU's
 New-ADOrganizationalUnit -Name "Resources" -Path $domainpath
     New-ADOrganizationalUnit -Name "Servers" -Path $resourcespath
        New-ADOrganizationalUnit -Name "DomainInfrastructure" -Path $serverspath
        New-ADOrganizationalUnit -Name "ApplicationInfrastructure" -Path $serverspath
+
+
+#Add New Groups and Members
+    New-ADGroup -Name "masterAdminRights" -SamAccountName masterAdminRights -DisplayName "masterAdminRights" `
+        -GroupScope Global -GroupCategory Security `
+        -Path $adminaccesspath
+    New-ADGroup -Name "xdAdmin" -SamAccountName xdAdmin -DisplayName "xdAdmin" `
+        -GroupScope Global -GroupCategory Security `
+        -Path $adminaccesspath
+    New-ADGroup -Name "rdsAdmin" -SamAccountName rdsAdmin -DisplayName "rdsAdmin" `
+        -GroupScope Global -GroupCategory Security `
+        -Path $adminaccesspath
+    New-ADGroup -Name "appAdmins" -SamAccountName appAdmins -DisplayName "appAdmins" `
+        -GroupScope Global -GroupCategory Security `
+        -Path $adminaccesspath
+        
+    #Add-ADGroupMember -Identity xdAdmin -Members firstname.lastname
+    Add-ADGroupMember -Identity masterAdminRights -Members basicvlab
+        Add-ADGroupMember -Identity xdAdmin -Members basicvlab
+        Add-ADGroupMember -Identity rdsAdmin -Members masterAdminRights
+        Add-ADGroupMember -Identity appAdmins -Members masterAdminRights
+    
+#Configure Citrix OU's
        New-ADOrganizationalUnit -Name "CitrixInfrastructure" -Path $serverspath
             New-ADOrganizationalUnit -Name "CitrixCloud" -Path "ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
                 New-ADOrganizationalUnit -Name "CloudGoldImages" -Path "ou=CitrixCloud,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
@@ -56,26 +86,4 @@ New-ADOrganizationalUnit -Name "Resources" -Path $domainpath
                 New-ADOrganizationalUnit -Name "StoreFront" -Path "ou=CitrixOnPrem,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
                 New-ADOrganizationalUnit -Name "SQL" -Path "ou=CitrixOnPrem,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
 
-
-#Add New Groups and Members
-    New-ADGroup -Name "masterAdminRights" -SamAccountName masterAdminRights -DisplayName "masterAdminRights" `
-        -GroupScope Global -GroupCategory Security `
-        -Path $adminaccesspath
-    New-ADGroup -Name "xdAdmin" -SamAccountName xdAdmin -DisplayName "xdAdmin" `
-        -GroupScope Global -GroupCategory Security `
-        -Path $adminaccesspath
-    New-ADGroup -Name "rdsAdmin" -SamAccountName rdsAdmin -DisplayName "rdsAdmin" `
-        -GroupScope Global -GroupCategory Security `
-        -Path $adminaccesspath
-    New-ADGroup -Name "appAdmins" -SamAccountName appAdmins -DisplayName "appAdmins" `
-        -GroupScope Global -GroupCategory Security `
-        -Path $adminaccesspath
-        
-    #Add-ADGroupMember -Identity xdAdmin -Members firstname.lastname
-    Add-ADGroupMember -Identity masterAdminRights -Members basicvlab
-        Add-ADGroupMember -Identity xdAdmin -Members basicvlab
-        Add-ADGroupMember -Identity rdsAdmin -Members masterAdminRights
-        Add-ADGroupMember -Identity appAdmins -Members masterAdminRights
-    
-#Configure Citrix OU's
     
