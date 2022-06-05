@@ -1,13 +1,38 @@
 #VARS
-$useraccesspath = "ou=UserAccess,ou=Access,DC=basicvlab,DC=local"
-$adminaccesspath = "ou=AdminAccess,ou=Access,DC=basicvlab,DC=local"
+    $domainpath = "DC=basicvlab,DC=local"
+    $resourcespath = "ou=Resources,DC=basicvlab,DC=local"
+    $serverspath = "ou=Servers,ou=Resources,DC=basicvlab,DC=local"
+    $useraccesspath = "ou=UserAccess,ou=Access,DC=basicvlab,DC=local"
+    $adminaccesspath = "ou=AdminAccess,ou=Access,DC=basicvlab,DC=local"
+    
 
 #Add new OU's
-New-ADOrganizationalUnit -Name "Access" -Path "DC=basicvlab,DC=local"
+New-ADOrganizationalUnit -Name "Access" -Path $domainpath
     New-ADOrganizationalUnit -Name "AdminAccounts" -Path "ou=Access,DC=basicvlab,DC=local"
+    New-ADOrganizationalUnit -Name "ServiceAccounts" -Path "ou=Access,DC=basicvlab,DC=local"
     New-ADOrganizationalUnit -Name "UserAccess" -Path "ou=Access,DC=basicvlab,DC=local"
         New-ADOrganizationalUnit -Name "BusinessUsers" -Path "ou=UserAccess,DC=basicvlab,DC=local"
     New-ADOrganizationalUnit -Name "AdminAccess" -Path "ou=Access,DC=basicvlab,DC=local"
+    
+    #User Access Nested OU's
+        New-ADOrganizationalUnit -Name "CitrixGroups" -Path "ou=UserAccess,ou=Access,DC=basicvlab,DC=local"
+
+New-ADOrganizationalUnit -Name "Resources" -Path $domainpath
+    New-ADOrganizationalUnit -Name "Servers" -Path $resourcespath
+       New-ADOrganizationalUnit -Name "DomainInfrastructure" -Path $serverspath
+       New-ADOrganizationalUnit -Name "CitrixInfrastructure" -Path $serverspath
+            New-ADOrganizationalUnit -Name "CitrixCloud" -Path "ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
+                New-ADOrganizationalUnit -Name "CloudGoldImages" -Path "ou=CitrixCloud,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
+                    New-ADOrganizationalUnit -Name "2016" -Path "ou=CloudGoldImages,ou=CitrixCloud,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
+                    New-ADOrganizationalUnit -Name "2019" -Path "ou=CloudGoldImages,ou=CitrixCloud,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
+                    New-ADOrganizationalUnit -Name "2022" -Path "ou=CloudGoldImages,ou=CitrixCloud,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
+                New-ADOrganizationalUnit -Name "CloudSessionHosts" -Path "ou=CitrixCloud,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
+                    New-ADOrganizationalUnit -Name "2016" -Path "ou=CloudSessionHosts,ou=CitrixCloud,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
+                    New-ADOrganizationalUnit -Name "2019" -Path "ou=CloudSessionHosts,ou=CitrixCloud,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
+                    New-ADOrganizationalUnit -Name "2022" -Path "ou=CloudSessionHosts,ou=CitrixCloud,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"               
+                New-ADOrganizationalUnit -Name "CloudStoreFront" -Path "ou=CitrixCloud,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
+                New-ADOrganizationalUnit -Name "CloudConnectors" -Path "ou=CitrixCloud,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
+            New-ADOrganizationalUnit -Name "CitrixOnPrem" -Path $serverspath
 
 
 #Add New Groups and Members
@@ -24,7 +49,11 @@ New-ADOrganizationalUnit -Name "Access" -Path "DC=basicvlab,DC=local"
         -GroupScope Global -GroupCategory Security `
         -Path $adminaccesspath
         
-    #Add-ADGroupMember -Identity xd-Admin -Members firstname.lastname
+    #Add-ADGroupMember -Identity xdAdmin -Members firstname.lastname
     Add-ADGroupMember -Identity masterAdminRights -Members basicvlab
-        Add-ADGroupMember -Identity masterAdminRights -Members xdAdmin,rdsAdmin,appAdmins
+        Add-ADGroupMember -Identity xdAdmin -Members basicvlab
+        Add-ADGroupMember -Identity rdsAdmin -Members masterAdminRights
+        Add-ADGroupMember -Identity appAdmins -Members masterAdminRights
+    
+#Configure Citrix OU's
     
