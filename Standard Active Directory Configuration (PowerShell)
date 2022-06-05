@@ -77,7 +77,7 @@ New-ADOrganizationalUnit -Name "Resources" -Path $domainpath
                     New-ADOrganizationalUnit -Name "2022" -Path "ou=CloudSessionHosts,ou=CitrixCloud,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"               
                 New-ADOrganizationalUnit -Name "CloudStoreFront" -Path "ou=CitrixCloud,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
                 New-ADOrganizationalUnit -Name "CloudConnectors" -Path "ou=CitrixCloud,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
-            New-ADOrganizationalUnit -Name "CitrixOnPrem" -Path $serverspath
+            New-ADOrganizationalUnit -Name "CitrixOnPrem" -Path "ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
                 New-ADOrganizationalUnit -Name "DeliveryController" -Path "ou=CitrixOnPrem,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
                 New-ADOrganizationalUnit -Name "GoldImages" -Path "ou=CitrixOnPrem,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
                     New-ADOrganizationalUnit -Name "2016" -Path "ou=GoldImages,ou=CitrixOnPrem,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
