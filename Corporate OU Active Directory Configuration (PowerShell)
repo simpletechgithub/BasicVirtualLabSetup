@@ -5,7 +5,7 @@
     PowerShell script to Configure Active Directory OU's
 
 .DESCRIPTION
-    Create a generic, corporate 'basicvlab' with powershell
+    Create a generic, corporate style virtual lab with powershell
 
 .GUIDANCE
     [*] Run on your new Domain Controller. This script has been tested successfully in the author's lab environment.
