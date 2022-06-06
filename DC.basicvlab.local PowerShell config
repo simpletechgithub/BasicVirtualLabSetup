@@ -4,7 +4,7 @@
     Create 'basicvlab' with powershell
 
 .DESCRIPTION
-    Run Adobe PDF Reader silently on one or more targets
+    Create 'basicvlab' with powershell
 
 .GUIDANCE
     Run on your new Domain Controller. This script has been tested successfully in the author's lab environment.    
