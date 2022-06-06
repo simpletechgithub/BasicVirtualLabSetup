@@ -1,7 +1,23 @@
-#Create 'basicvlab' with powershell
-#Run on your new Domain Controller. This script has been tested successfully in the author's lab environment.
 
-#working  05/06/2022 
+<#
+.Synopsis
+    Create 'basicvlab' with powershell
+
+.DESCRIPTION
+    Run Adobe PDF Reader silently on one or more targets
+
+.GUIDANCE
+    Run on your new Domain Controller. This script has been tested successfully in the author's lab environment.    
+
+.NOTE
+    Author cybersectv, cybersectv@protonmail.com  https://twitter.com/cybersec_tv
+   
+.SOURCE
+    Author's combined collection of Active Directory scripts
+    
+.TESTING
+    working  05/06/2022   
+#>
 #VARS
 $folder = "Directory"
 
@@ -15,7 +31,7 @@ Set-NetFirewallProfile -Enabled False
 
 Rename-Computer dc
 Restart-Computer  -Force
-#
+
 #REBOOT THEN RUN THE REST____________________________
 
 Install-WindowsFeature -Name Telnet-Client
