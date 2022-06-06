@@ -2,10 +2,10 @@
 
 <#
 .Synopsis
-    Create 'basicvlab' with powershell
+    PowerShell script to Configure Acitve Directory OU's
 
 .DESCRIPTION
-    Create 'basicvlab' with powershell
+    Create a generic, corporate 'basicvlab' with powershell
 
 .GUIDANCE
     [*] Run on your new Domain Controller. This script has been tested successfully in the author's lab environment.
