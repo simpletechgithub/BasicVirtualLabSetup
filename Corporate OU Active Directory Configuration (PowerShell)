@@ -2,7 +2,7 @@
 
 <#
 .Synopsis
-    PowerShell script to Configure Acitve Directory OU's
+    PowerShell script to Configure Active Directory OU's
 
 .DESCRIPTION
     Create a generic, corporate 'basicvlab' with powershell
