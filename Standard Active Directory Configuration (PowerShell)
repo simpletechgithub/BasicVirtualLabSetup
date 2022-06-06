@@ -1,7 +1,29 @@
-#PLEASE NOTE - I always create atleast two users on a new domain, as enterprise and domain admins
-#Some of the steps below do involve these users so you will see failures if you don't have these two user accounts.
-#'enterprise0'
-#'<nameofdomain>' e.g. basicvlab
+
+
+<#
+.Synopsis
+    Create 'basicvlab' with powershell
+
+.DESCRIPTION
+    Create 'basicvlab' with powershell
+
+.GUIDANCE
+    [*] Run on your new Domain Controller. This script has been tested successfully in the author's lab environment.
+    [*] PLEASE NOTE - I always create atleast two users on a new domain, as enterprise and domain admins
+    [*] Some of the steps below do involve these users so you will see failures if you don't have these two user accounts.
+        [1] 'enterprise0'
+        [2] '<nameofdomain>' e.g. basicvlab
+
+.NOTE
+    Author cybersectv, cybersectv@protonmail.com  https://twitter.com/cybersec_tv
+   
+.SOURCE
+    Author's combined collection of Active Directory scripts
+    
+.TESTING
+    working  05/06/2022   
+
+
 
 #VARS
     $domainpath = "DC=basicvlab,DC=local"
@@ -37,11 +59,13 @@ New-ADOrganizationalUnit -Name "Access" -Path $domainpath
         New-ADOrganizationalUnit -Name "CitrixGroups" -Path "ou=UserAccess,ou=Access,DC=basicvlab,DC=local"
 
 #Add common Infrastructure OU's
+$serverspath = "ou=Servers,ou=Resources,DC=basicvlab,DC=local"
 New-ADOrganizationalUnit -Name "Resources" -Path $domainpath
     New-ADOrganizationalUnit -Name "Servers" -Path $resourcespath
        New-ADOrganizationalUnit -Name "DomainInfrastructure" -Path $serverspath
        New-ADOrganizationalUnit -Name "ApplicationInfrastructure" -Path $serverspath
        New-ADOrganizationalUnit -Name "RDSInfrastructure" -Path $serverspath
+       New-ADOrganizationalUnit -Name "SQLInfrastructure" -Path $serverspath
 
 
 #Add New Groups and Members
