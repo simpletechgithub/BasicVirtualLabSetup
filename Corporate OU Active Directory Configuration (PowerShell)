@@ -91,7 +91,7 @@ New-ADOrganizationalUnit -Name "Resources" -Path $domainpath
         Add-ADGroupMember -Identity rdsAdmin -Members masterAdminRights
         Add-ADGroupMember -Identity appAdmins -Members masterAdminRights
     
-#Configure Citrix OU's
+#Configure Citrix OU's & GPO's
     New-ADOrganizationalUnit -Name "Citrix" -Path $domainpath
        New-ADOrganizationalUnit -Name "CitrixInfrastructure" -Path "OU=Citrix,$domainpath"
             New-ADOrganizationalUnit -Name "CloudConnectors" -Path $citrixcloudpath
