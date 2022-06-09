@@ -1,5 +1,5 @@
 
-$Users = Import-Csv -Path "C:\BulkUserImport.csv"            
+$Users = Import-Csv -Path "C:\temp\BulkUserImport.csv"            
 foreach ($User in $Users)            
 {            
     $Displayname = $User.Firstname + " " + $User.Lastname            
