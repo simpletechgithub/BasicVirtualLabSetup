@@ -29,8 +29,8 @@
     $domainpath = "DC=basicvlab,DC=local"
     $domaininfrastructurepath = "ou=DomainInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
     $citrixinfrastructurepath = "ou=CitrixInfrastructure,ou=Citrix,DC=basicvlab,DC=local"
-    $citrixcloudpath = ""
-    $citrixonprempath = ""
+    $citrixcloudpath = "ou=CitrixCloud,ou=CitrixInfrastructure,ou=Citrix,DC=basicvlab,DC=local"
+    $citrixonprempath = "ou=CitrixOnPrem,ou=CitrixInfrastructure,ou=Citrix,DC=basicvlab,DC=local"
     $serviceaccountspath = "ou=ServiceAccounts,ou=Access,DC=basicvlab,DC=local"
     $resourcespath = "ou=Resources,DC=basicvlab,DC=local"
     $serverspath = "ou=Servers,ou=Resources,DC=basicvlab,DC=local"
@@ -93,52 +93,27 @@ New-ADOrganizationalUnit -Name "Resources" -Path $domainpath
     
 #Configure Citrix OU's
     New-ADOrganizationalUnit -Name "Citrix" -Path $domainpath
-       New-ADOrganizationalUnit -Name "CitrixInfrastructure" -Path $serverspath
+       New-ADOrganizationalUnit -Name "CitrixInfrastructure" -Path "OU=Citrix,$domainpath"
             New-ADOrganizationalUnit -Name "CloudConnectors" -Path $citrixcloudpath
             New-ADOrganizationalUnit -Name "CitrixCloud" -Path "ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
                 New-ADOrganizationalUnit -Name "CustomDesktops" -Path $citrixcloudpath
-                    New-ADOrganizationalUnit -Name "2016" -Path "ou=CustomDesktops,ou=CitrixCloud,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
-                    New-ADOrganizationalUnit -Name "2019" -Path "ou=CustomDesktops,ou=CitrixCloud,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
-                    New-ADOrganizationalUnit -Name "2022" -Path "ou=CustomDesktops,ou=CitrixCloud,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
-                
                 New-ADOrganizationalUnit -Name "CloudGoldImages" -Path $citrixcloudpath
-                    New-ADOrganizationalUnit -Name "2016" -Path "ou=CloudGoldImages,ou=CitrixCloud,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
-                    New-ADOrganizationalUnit -Name "2019" -Path "ou=CloudGoldImages,ou=CitrixCloud,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
-                    New-ADOrganizationalUnit -Name "2022" -Path "ou=CloudGoldImages,ou=CitrixCloud,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
                 New-ADOrganizationalUnit -Name "CloudSessionHosts" -Path $citrixcloudpath
-                    New-ADOrganizationalUnit -Name "2016" -Path "ou=CloudSessionHosts,ou=CitrixCloud,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
-                    New-ADOrganizationalUnit -Name "2019" -Path "ou=CloudSessionHosts,ou=CitrixCloud,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
-                    New-ADOrganizationalUnit -Name "2022" -Path "ou=CloudSessionHosts,ou=CitrixCloud,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"               
-                
-                New-ADOrganizationalUnit -Name "CloudDesktops" -Path $citrixcloudpath
-                    New-ADOrganizationalUnit -Name "2016" -Path "ou=CloudDesktops,ou=CitrixCloud,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
-                    New-ADOrganizationalUnit -Name "2019" -Path "ou=CloudDesktops,ou=CitrixCloud,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
-                    New-ADOrganizationalUnit -Name "2022" -Path "ou=CloudDesktops,ou=CitrixCloud,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
-                
+                New-ADOrganizationalUnit -Name "CloudDesktops" -Path $citrixcloudpath                
                 New-ADOrganizationalUnit -Name "CloudStoreFront" -Path $citrixcloudpath
 
                 #____________________________________________________________________________________________________________________
                 
-            New-ADOrganizationalUnit -Name "CitrixOnPrem" -Path "ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
-                New-ADOrganizationalUnit -Name "DeliveryController" -Path "ou=CitrixOnPrem,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
+            New-ADOrganizationalUnit -Name "CitrixOnPrem" -Path $citrixinfrastructurepath
+                New-ADOrganizationalUnit -Name "DeliveryController" -Path "ou=CitrixOnPrem,$citrixinfrastructurepath"
                 
-                New-ADOrganizationalUnit -Name "GoldImages" -Path "ou=CitrixOnPrem,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
-                    New-ADOrganizationalUnit -Name "2016" -Path "ou=GoldImages,ou=CitrixOnPrem,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
-                    New-ADOrganizationalUnit -Name "2019" -Path "ou=GoldImages,ou=CitrixOnPrem,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
-                    New-ADOrganizationalUnit -Name "2022" -Path "ou=GoldImages,ou=CitrixOnPrem,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
-                New-ADOrganizationalUnit -Name "SessionHosts" -Path "ou=CitrixOnPrem,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
-                    New-ADOrganizationalUnit -Name "2016" -Path "ou=SessionHosts,ou=CitrixOnPrem,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
-                    New-ADOrganizationalUnit -Name "2019" -Path "ou=SessionHosts,ou=CitrixOnPrem,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
-                    New-ADOrganizationalUnit -Name "2022" -Path "ou=SessionHosts,ou=CitrixOnPrem,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"               
+                New-ADOrganizationalUnit -Name "GoldImages" -Path Path "ou=CitrixOnPrem,$citrixinfrastructurepath"
+                New-ADOrganizationalUnit -Name "SessionHosts" -Path Path "ou=CitrixOnPrem,$citrixinfrastructurepath"              
                 
-                New-ADOrganizationalUnit -Name "SharedDesktops" -Path "ou=CitrixOnPrem,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
-                    New-ADOrganizationalUnit -Name "2016" -Path "ou=SharedDesktops,ou=CitrixOnPrem,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
-                    New-ADOrganizationalUnit -Name "2019" -Path "ou=SharedDesktops,ou=CitrixOnPrem,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
-                    New-ADOrganizationalUnit -Name "2022" -Path "ou=SharedDesktops,ou=CitrixOnPrem,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"               
-                
-               
-                New-ADOrganizationalUnit -Name "StoreFront" -Path "ou=CitrixOnPrem,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
-                New-ADOrganizationalUnit -Name "SQL" -Path "ou=CitrixOnPrem,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
+                New-ADOrganizationalUnit -Name "SharedDesktops" -Path Path "ou=CitrixOnPrem,$citrixinfrastructurepath"        
+                            
+                New-ADOrganizationalUnit -Name "StoreFront" -Path Path "ou=CitrixOnPrem,$citrixinfrastructurepath"
+                New-ADOrganizationalUnit -Name "SQL" -Path Path "ou=CitrixOnPrem,$citrixinfrastructurepath"
        
         Set-GPInheritance -Target $citrixinfrastructurepath -IsBlocked Yes 
     
