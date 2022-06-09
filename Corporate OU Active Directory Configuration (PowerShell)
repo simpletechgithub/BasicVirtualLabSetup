@@ -28,9 +28,9 @@
 #VARS
     $domainpath = "DC=basicvlab,DC=local"
     $domaininfrastructurepath = "ou=DomainInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
-    $citrixinfrastructurepath = "ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
-    $citrixcloudpath = "ou=CitrixCloud,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
-    $citrixonprempath = "ou=CitrixOnPrem,ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
+    $citrixinfrastructurepath = "ou=CitrixInfrastructure,ou=Citrix,DC=basicvlab,DC=local"
+    $citrixcloudpath = ""
+    $citrixonprempath = ""
     $serviceaccountspath = "ou=ServiceAccounts,ou=Access,DC=basicvlab,DC=local"
     $resourcespath = "ou=Resources,DC=basicvlab,DC=local"
     $serverspath = "ou=Servers,ou=Resources,DC=basicvlab,DC=local"
@@ -92,6 +92,7 @@ New-ADOrganizationalUnit -Name "Resources" -Path $domainpath
         Add-ADGroupMember -Identity appAdmins -Members masterAdminRights
     
 #Configure Citrix OU's
+    New-ADOrganizationalUnit -Name "Citrix" -Path $domainpath
        New-ADOrganizationalUnit -Name "CitrixInfrastructure" -Path $serverspath
             New-ADOrganizationalUnit -Name "CloudConnectors" -Path $citrixcloudpath
             New-ADOrganizationalUnit -Name "CitrixCloud" -Path "ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
