@@ -75,15 +75,14 @@ New-ADOrganizationalUnit -Name "Resources" -Path $domainpath
     New-ADGroup -Name "masterAdminRights" -SamAccountName masterAdminRights -DisplayName "masterAdminRights" `
         -GroupScope Global -GroupCategory Security `
         -Path $adminaccesspath
-    New-ADGroup -Name "xdAdmin" -SamAccountName xdAdmin -DisplayName "xdAdmin" `
-        -GroupScope Global -GroupCategory Security `
-        -Path $adminaccesspath
     New-ADGroup -Name "rdsAdmin" -SamAccountName rdsAdmin -DisplayName "rdsAdmin" `
         -GroupScope Global -GroupCategory Security `
         -Path $adminaccesspath
     New-ADGroup -Name "appAdmins" -SamAccountName appAdmins -DisplayName "appAdmins" `
         -GroupScope Global -GroupCategory Security `
         -Path $adminaccesspath
+        
+        
         
     #Add-ADGroupMember -Identity xdAdmin -Members firstname.lastname
     Add-ADGroupMember -Identity masterAdminRights -Members basicvlab,enterprise0
@@ -92,6 +91,15 @@ New-ADOrganizationalUnit -Name "Resources" -Path $domainpath
         Add-ADGroupMember -Identity appAdmins -Members masterAdminRights
     
 #Configure Citrix OU's & GPO's
+    New-ADGroup -Name "xdAdmin" -SamAccountName xdAdmin -DisplayName "xdAdmin" `
+        -GroupScope Global -GroupCategory Security `
+        -Path $adminaccesspath
+    New-ADGroup -Name "xdGPOAdmin" -SamAccountName xdAdmin -DisplayName "xdAdmin" `
+        -GroupScope Global -GroupCategory Security `
+        -Path $adminaccesspath
+
+    new-gpo -name CitrixCloudDefaultGPO | new-gplink -target $citrixinfrastructurepath | set-gppermissions -permissionlevel gpoedit -targetname "xdGPOAdmin" -targettype group 
+
     New-ADOrganizationalUnit -Name "Citrix" -Path $domainpath
        New-ADOrganizationalUnit -Name "CitrixInfrastructure" -Path "OU=Citrix,$domainpath"
             New-ADOrganizationalUnit -Name "CloudConnectors" -Path $citrixcloudpath
@@ -104,7 +112,7 @@ New-ADOrganizationalUnit -Name "Resources" -Path $domainpath
 
                 #____________________________________________________________________________________________________________________
                 
-            New-ADOrganizationalUnit -Name "CitrixOnPrem" -Path $citrixinfrastructurepath
+          New-ADOrganizationalUnit -Name "CitrixOnPrem" -Path $citrixinfrastructurepath
                 New-ADOrganizationalUnit -Name "DeliveryController" -Path "ou=CitrixOnPrem,$citrixinfrastructurepath"
                 
                 New-ADOrganizationalUnit -Name "GoldImages" -Path Path "ou=CitrixOnPrem,$citrixinfrastructurepath"
