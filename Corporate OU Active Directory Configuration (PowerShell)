@@ -91,6 +91,7 @@ New-ADOrganizationalUnit -Name "Resources" -Path $domainpath
         Add-ADGroupMember -Identity appAdmins -Members masterAdminRights
     
 #Configure Citrix OU's & GPO's
+    #New-ADOrganizationalUnit -Name "Access" -Path $domainpath
     New-ADGroup -Name "xdAdmin" -SamAccountName xdAdmin -DisplayName "xdAdmin" `
         -GroupScope Global -GroupCategory Security `
         -Path $adminaccesspath
@@ -98,17 +99,26 @@ New-ADOrganizationalUnit -Name "Resources" -Path $domainpath
         -GroupScope Global -GroupCategory Security `
         -Path $adminaccesspath
 
-    new-gpo -name CitrixCloudDefaultGPO | new-gplink -target $citrixinfrastructurepath | set-gppermissions -permissionlevel gpoedit -targetname "xdGPOAdmin" -targettype group 
 
-    New-ADOrganizationalUnit -Name "Citrix" -Path $domainpath
+    
+    New-ADOrganizationalUnit -Name "Citrix" -Path $domainpath    
        New-ADOrganizationalUnit -Name "CitrixInfrastructure" -Path "OU=Citrix,$domainpath"
             New-ADOrganizationalUnit -Name "CloudConnectors" -Path $citrixcloudpath
             New-ADOrganizationalUnit -Name "CitrixCloud" -Path "ou=CitrixInfrastructure,ou=Servers,ou=Resources,DC=basicvlab,DC=local"
+                New-ADOrganizationalUnit -Name "3rdPartyDesktops" -Path $citrixcloudpath
                 New-ADOrganizationalUnit -Name "CustomDesktops" -Path $citrixcloudpath
                 New-ADOrganizationalUnit -Name "CloudGoldImages" -Path $citrixcloudpath
                 New-ADOrganizationalUnit -Name "CloudSessionHosts" -Path $citrixcloudpath
                 New-ADOrganizationalUnit -Name "CloudDesktops" -Path $citrixcloudpath                
                 New-ADOrganizationalUnit -Name "CloudStoreFront" -Path $citrixcloudpath
+                
+    new-gpo -name CitrixCloudDefaultGPO | new-gplink -target $citrixinfrastructurepath | set-gppermissions -permissionlevel gpoedit -targetname "xdGPOAdmin" -targettype group 
+    
+    
+    New-ADOrganizationalUnit -Name "3rdPartyResources" -Path $domainpath
+    
+    new-gpo -name Citrix3rdPartyLockdownGPO | new-gplink -target "3rdPartyDesktops,$citrixcloudpath" | set-gppermissions -permissionlevel gpoedit -targetname "xdGPOAdmin" -targettype group 
+
 
                 #____________________________________________________________________________________________________________________
                 
