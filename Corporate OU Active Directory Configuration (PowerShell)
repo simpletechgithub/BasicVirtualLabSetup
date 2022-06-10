@@ -116,10 +116,15 @@ New-ADOrganizationalUnit -Name "Resources" -Path $domainpath
     
     
     New-ADOrganizationalUnit -Name "3rdPartyResources" -Path $domainpath
+        New-ADOrganizationalUnit -Name "3rdPartyCitrix" -Path "3rdPartyResources,$domainpath"
+            New-ADOrganizationalUnit -Name "3rdPartyDesktops" -Path "3rdPartyResources,$domainpath"
+                new-gpo -name Citrix3rdPartyLockdownGPO | new-gplink -target "3rdPartyCitrix,3rdPartyDesktops,3rdPartyCitrix,$domainpath" | set-gppermissions -permissionlevel gpoedit -targetname "xdGPOAdmin" -targettype group 
+                new-gpo -name Citrix3rdPartyCopyPasteLockdownGPO | new-gplink -target "3rdPartyCitrix,3rdPartyDesktops,3rdPartyCitrix,$domainpath"  | set-gppermissions -permissionlevel gpoedit -targetname "xdGPOAdmin" -targettype group 
+                new-gpo -name Citrix3rdPartyPermitCdriveGPO | new-gplink -target "3rdPartyCitrix,3rdPartyDesktops,3rdPartyCitrix,$domainpath"  | set-gppermissions -permissionlevel gpoedit -targetname "xdGPOAdmin" -targettype group
     
-    new-gpo -name Citrix3rdPartyLockdownGPO | new-gplink -target "3rdPartyDesktops,$citrixcloudpath" | set-gppermissions -permissionlevel gpoedit -targetname "xdGPOAdmin" -targettype group 
-
-
+    Set-GPInheritance -Target "3rdPartyResources,$domainpath" -IsBlocked Yes 
+                
+                
                 #____________________________________________________________________________________________________________________
                 
           New-ADOrganizationalUnit -Name "CitrixOnPrem" -Path $citrixinfrastructurepath
