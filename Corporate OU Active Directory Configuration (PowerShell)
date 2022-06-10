@@ -87,8 +87,11 @@ New-ADOrganizationalUnit -Name "Access" -Path $domainpath
 #Add common Infrastructure OU's
 $serverspath = "ou=Servers,ou=Resources,DC=basicvlab,DC=local"
 New-ADOrganizationalUnit -Name "Resources" -Path $domainpath
+        $resourcespath = "ou=Resources,DC=basicvlab,DC=local"
+    New-ADOrganizationalUnit -Name "MasterApplockerPolicy" -Path $resourcespath
     New-ADOrganizationalUnit -Name "Servers" -Path $resourcespath
             new-gpo -name ApplockerGPO | new-gplink -target $serverspath | set-gppermissions -permissionlevel gpoedit -targetname "masterAdminRights" -targettype group
+            Get-gpo -name ApplockerGPO | set-gppermissions -permissionlevel gpoedit -targetname "applockerAdmins" -targettype group
        New-ADOrganizationalUnit -Name "DomainInfrastructure" -Path $serverspath
        New-ADOrganizationalUnit -Name "ApplicationInfrastructure" -Path $serverspath
        New-ADOrganizationalUnit -Name "RDSInfrastructure" -Path $serverspath
